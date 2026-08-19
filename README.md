@@ -13,12 +13,13 @@
 
 Toutes les commandes s'exécutent depuis la racine du projet dans un terminal :
 
-| Commande          | Action                                         |
-| :---------------- | :--------------------------------------------- |
-| `npm install`     | Installe les dépendances                       |
-| `npm run dev`     | Lance le serveur de développement local        |
-| `npm run build`   | Compile le site de production dans `./dist/`   |
-| `npm run preview` | Prévisualise la version de production en local |
+| Commande        | Action                                         |
+| :-------------- | :--------------------------------------------- |
+| `npm install`   | Installe les dépendances du projet             |
+| `astro dev`     | Lance le serveur de développement local        |
+| `astro build`   | Compile le site de production dans `./dist/`   |
+| `astro preview` | Prévisualise la version de production en local |
+| `astro check`   | Vérifie les erreurs de type et de syntaxe      |
 
 ## 📄 Licence
 
