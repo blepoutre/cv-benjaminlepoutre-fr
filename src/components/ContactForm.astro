@@ -1,0 +1,197 @@
+---
+// src/components/ContactForm.astro
+---
+<form id="form">
+  <!-- Votre clé d'accès Web3Forms -->
+  <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} />
+
+  <!-- Champ Honeypot anti-spam caché des humains -->
+  <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
+  <!-- Menu déroulant pour l'objet du message -->
+  <div class="form-group">
+    <label for="subject">Objet de votre message</label>
+    <select id="subject" name="subject" required>
+      <option value="" disabled selected>Choisissez une option...</option>
+      <option value="Prise de contact / Opportunité">Prise de contact / Opportunité</option>
+      <option value="Réclamation / Autre">Réclamation / Autre</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="firstname">Votre prénom</label>
+    <input type="text" id="firstname" name="first_name" required placeholder="Jean" autocomplete="given-name" />
+  </div>
+
+  <div class="form-group">
+    <label for="lastname">Votre nom</label>
+    <input type="text" id="lastname" name="last_name" required placeholder="Dupont" autocomplete="family-name" />
+  </div>
+
+  <div class="form-group">
+    <label for="phone">Votre téléphone (optionnel)</label>
+    <input type="tel" id="phone" name="phone" placeholder="06 12 34 56 78" autocomplete="tel" />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Votre e-mail</label>
+    <input type="email" id="email" name="email" required placeholder="mail@exemple.fr" autocomplete="email" />
+  </div>
+
+  <div class="form-group">
+    <label for="message">Votre message</label>
+    <textarea id="message" name="message" rows="4" required placeholder="Votre message..."></textarea>
+  </div>
+
+  <button type="submit" class="btn-submit">Envoyer le message</button>
+
+  <!-- Mention RGPD obligatoire -->
+  <p class="rgpd-notice">
+    En envoyant ce formulaire, vous acceptez que vos données soient utilisées pour vous recontacter.
+    <br />Consultez la <a href="/politique-de-confidentialite" target="_blank">politique de confidentialité (RGPD)</a>.
+  </p>
+
+  <div id="result"></div>
+</form>
+
+<style>
+  #form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    font-family: var(--sans, "Source Sans 3", sans-serif);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-family: var(--mono, "Source Code Pro", monospace);
+    font-size: 0.75rem;
+    color: var(--muted, #4a4a4a);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--rule, #e5e2dc);
+    border-radius: 4px;
+    background: var(--paper, #ffffff);
+    color: var(--ink, #0f0f0f);
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+
+  select {
+    cursor: pointer;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--accent, #b8922e);
+  }
+
+  .btn-submit {
+    background: var(--ink, #0f0f0f);
+    color: var(--paper, #ffffff);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-family: var(--mono, "Source Code Pro", monospace);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .btn-submit:hover {
+    background: var(--accent, #b8922e);
+  }
+
+  .rgpd-notice {
+    font-size: 0.7rem;
+    color: var(--muted, #4a4a4a);
+    line-height: 1.4;
+    margin-top: 0.2rem;
+    text-align: center;
+  }
+
+  .rgpd-notice a {
+    color: var(--accent, #b8922e);
+    text-decoration: underline;
+  }
+
+  #result {
+    font-family: var(--mono, "Source Code Pro", monospace);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  const form = document.getElementById("form") as HTMLFormElement;
+  const result = document.getElementById("result") as HTMLElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Validation optionnelle du téléphone via Regex française (si rempli)
+    const phoneInput = (document.getElementById("phone") as HTMLInputElement).value.trim();
+    if (phoneInput !== "") {
+      const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/;
+      if (!phoneRegex.test(phoneInput)) {
+        result.style.color = "#b91c1c";
+        result.innerHTML = "Veuillez entrer un numéro de téléphone valide.";
+        return;
+      }
+    }
+
+    result.style.color = "inherit";
+    result.innerHTML = "Envoi en cours...";
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: new FormData(form),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        result.innerHTML = "Message envoyé avec succès !";
+        form.reset();
+        setTimeout(() => {
+          const modal = document.getElementById('contactModal') as HTMLDialogElement;
+          if (modal) modal.close();
+          result.innerHTML = "";
+        }, 2000);
+      } else {
+        result.innerHTML = data.message || "Une erreur est survenue.";
+      }
+    } catch (err) {
+      result.innerHTML = "Erreur de connexion.";
+    }
+  });
+</script>

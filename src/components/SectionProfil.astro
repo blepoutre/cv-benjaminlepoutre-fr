@@ -1,0 +1,109 @@
+---
+interface Props { number: string }
+const { number } = Astro.props
+---
+
+<section class="section">
+  <div class="page">
+    <div class="section-header">
+      <span class="section-num">{number}</span>
+      <h2>Profil</h2>
+    </div>
+    <p class="profil-text">
+      10 ans sur le terrain, de la défense à l'industrie,
+      à transformer des contraintes techniques en <strong>méthodes reproductibles</strong> —
+      là où il n'y avait pas de mode d'emploi.
+      De la DGA à Dassault Aviation, en passant par la pharmacie et l'automobile,
+      j'ai calibré des chaînes de mesure critiques et formé des équipes
+      à des pratiques rigoureuses.
+    </p>
+    <p class="profil-text" style="margin-top: 1.25rem;">
+      Ce qui me distingue : une capacité à <strong>poser des méthodes là où rien n'existait encore</strong>,
+      à documenter rigoureusement, et à embarquer les équipes dans de nouvelles pratiques.
+      Curieux par nature, j'ai élargi mon périmètre au <strong>développement web</strong>
+      (Ruby on Rails, JavaScript, Astro), ce qui me donne un regard systémique rare
+      entre le terrain, la technique et la structuration de l'information.
+    </p>
+    <p class="profil-text" style="margin-top: 1.25rem;">
+      Je cherche un environnement où <strong>la rigueur est une valeur, pas un slogan</strong>.
+    </p>
+    <div class="profil-signature">
+      <span class="sig-item">Métrologie · Qualité</span>
+      <span class="sig-sep">×</span>
+      <span class="sig-item">Développement Web</span>
+      <span class="sig-sep">×</span>
+      <span class="sig-item">Création de méthodes</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #e8d4a8;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .profil-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--ink);
+    max-width: 680px;
+    font-weight: 300;
+  }
+
+  .profil-text strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .profil-signature {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    flex-wrap: wrap;
+  }
+
+  .sig-item {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .sig-sep {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--accent);
+  }
+
+  @media print {
+    .section { padding: 0.75rem 0; }
+    .section-header { break-after: avoid; }
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+// src/layouts/Layout.astro
+
+import '../styles/tokens.css';
+import ModalContact from '../components/ModalContact.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = "Benjamin Lepoutre — Métrologie & Qualité",
+  description = "Dix ans sur le terrain, de la défense à l'industrie. Agent de Maîtrise en Métrologie & Qualité, élargi au développement web par curiosité. Disponible.",
+  ogImage = "/og-image.jpg"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, "https://benjaminlepoutre.fr");
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow, noarchive" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500&family=Source+Code+Pro:wght@300;400;500&display=swap" rel="stylesheet" />
+    <!-- Inter + Playfair (alternative) -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" /> -->
+    <title>{title}</title>
+
+    <!-- SEO basique -->
+    <meta name="description" content={description} />
+    <meta name="author" content="Benjamin Lepoutre" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph (LinkedIn, WhatsApp, Facebook) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <slot />
+    <ModalContact />
+  </body>
+</html>
+
+<style is:global>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+  }
+
+  @media (max-width: 768px) {
+  .page {
+    padding: 0 1.25rem;
+  }
+  }
+
+  @media print {
+    /* Supprime le grain et le fond */
+    body::before { display: none; }
+    body {
+      background: white;
+      color: black;
+      font-size: 13px;
+    }
+
+    /* Pas de coupure de page au milieu d'une expérience */
+    .exp-item { break-inside: avoid; }
+    .formation-card { break-inside: avoid; }
+
+    /* Liens visibles en impression */
+    .contact-link::after {
+      content: none;
+    }
+
+    /* Supprime les bordures colorées superflues */
+    .exp-item.featured {
+      background: #fafafa !important; /* Très léger gris */
+      border: 1px solid #ccc !important;
+      border-left: 4px solid #333 !important; /* Bordure noire pour le contraste */
+    }
+
+    /* Page entière en largeur */
+    .page {
+      max-width: 100%;
+      padding: 0 1rem;
+      overflow: hidden;
+    }
+
+  }
+</style>
+
+<script>
+  function fillPrintContacts() {
+    document.querySelectorAll('[data-print-contact]').forEach((el) => {
+      el.textContent = 'contact@benjaminlepoutre.fr';
+    });
+  }
+  function clearPrintContacts() {
+    document.querySelectorAll('[data-print-contact]').forEach((el) => {
+      el.textContent = '';
+    });
+  }
+  window.addEventListener('beforeprint', fillPrintContacts);
+  window.addEventListener('afterprint', clearPrintContacts);
+</script>

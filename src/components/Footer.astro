@@ -1,0 +1,247 @@
+---
+import ContactForm from './ContactForm.astro';
+---
+
+<footer>
+  <div class="page">
+    <div class="contact-strip">
+      <div>
+        <div class="label">Contact</div>
+      </div>
+      <div class="contact-links">
+        <!-- Version écran : Ouvre la modale -->
+        <a class="contact-link email-trigger-btn openModalBtn screen-only">Me contacter</a>
+
+        <!-- Version impression PDF : Affiche l'e-mail statique brut -->
+        &nbsp;<span class="contact-link print-only" data-print-contact></span>
+        <a class="contact-link" href="tel:0603166412">
+          06 03 16 64 12
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/benjaminlepoutre" target="_blank">
+          linkedin.com/in/benjaminlepoutre
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-sig">±0</span>
+      <!-- Mentions légales -->
+      <p class="legal-notice">
+        © 2026 Benjamin Lepoutre. Données protégées — Toute réutilisation commerciale ou extraction non autorisée est interdite.
+      </p>
+    </div>
+  </div>
+
+  <!-- Modale de contact globale gérée depuis le footer -->
+  <dialog id="contactModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Me contacter</h2>
+        <button id="closeModalBtn" type="button" class="close-x">&times;</button>
+      </div>
+      <ContactForm />
+    </div>
+  </dialog>
+</footer>
+
+<script>
+  const dialog = document.getElementById('contactModal') as HTMLDialogElement;
+  const openBtn = document.getElementById('openModalBtn');
+  const closeBtn = document.getElementById('closeModalBtn');
+
+  openBtn?.addEventListener('click', () => {
+    dialog?.showModal();
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    dialog?.close();
+  });
+
+  dialog?.addEventListener('click', (e) => {
+    const rect = dialog.getBoundingClientRect();
+    if (
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
+    ) {
+      dialog.close();
+    }
+  });
+</script>
+
+<style>
+  footer {
+    padding: 4rem 0 3rem;
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .label::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .contact-strip {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4rem;
+    align-items: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .contact-title {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .contact-link::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 0.7rem;
+  }
+
+  .contact-link:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+  }
+
+  .legal-notice {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    color: var(--muted);
+    max-width: 400px;
+    line-align: right;
+    opacity: 0.7;
+  }
+
+  .footer-credit {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-sig {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: var(--rule);
+    letter-spacing: -0.02em;
+  }
+
+  .footer-link {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .footer-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .print-only { display: none; }
+  .screen-only { display: flex !important; }
+
+  /* Styles de la modale */
+  dialog#contactModal {
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    width: 100%;
+    max-width: 500px;
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  }
+  dialog#contactModal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .modal-content {
+    padding: 1.5rem;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .modal-header h2 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+  .close-x {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer !important;
+    color: var(--ink);
+  }
+
+  @media (max-width: 768px) {
+    .contact-strip {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+
+  @media print {
+    .footer-sig { display: none; }
+    .print-only {
+      display: flex !important;
+      font-family: var(--mono) !important;
+      font-size: 0.8rem !important;
+      color: var(--muted) !important;
+    }
+    .print-only::before {
+      content: '→';
+      color: var(--accent);
+      font-size: 0.7rem;
+    }
+    .screen-only { display: none !important; }
+    dialog#contactModal { display: none !important; }
+  }
+</style>

@@ -1,0 +1,143 @@
+---
+interface Props { number: string }
+const { number } = Astro.props
+
+const formations = [
+  {
+    year: "2013 — 2014",
+    title: "DUT Mesures Physiques",
+    org: "IUT de Bourges",
+    desc: "Formation fondatrice en <strong>instrumentation</strong> et <strong>métrologie de laboratoire</strong>, obtenue en apprentissage chez <strong>Hutchinson</strong> — création d'un <strong>banc de test</strong> et d'une <strong>nouvelle méthode adaptée</strong> aux durites automobiles.",
+    accent: false,
+  },
+  {
+    year: "Avr. — Juin 2024",
+    title: "Titre Professionnel RNCP6 — Concepteur / Développeur d'Applications Web",
+    org: "Le Wagon · Lille",
+    desc: "<strong>Bootcamp intensif</strong> : Ruby on Rails, JavaScript, Stimulus/TurboJS, HTML/SCSS, Figma. Ce site a été développé avec AstroJS.",
+    accent: true,
+  },
+];
+---
+
+<section class="section">
+  <div class="page">
+    <div class="section-header">
+      <span class="section-num">{number}</span>
+      <h2>Formation</h2>
+    </div>
+    <div class="formation-grid">
+      {formations.map((f) => (
+        <div class={`formation-card${f.accent ? " accent" : ""}`}>
+          <div class="formation-year">{f.year}</div>
+          <div class="formation-title">{f.title}</div>
+          <div class="formation-org">{f.org}</div>
+          <p class="formation-desc" set:html={f.desc} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #e8d4a8;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .formation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .formation-card {
+    background: var(--paper);
+    padding: 2rem;
+    /* transition: background 0.2s; */
+  }
+
+  /* .formation-card:hover { background: var(--card); } */
+
+  .formation-card.accent {
+    background: var(--card);
+  }
+
+  .formation-year {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .formation-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 768px) {
+    .formation-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .formation-org {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .formation-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .formation-desc strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  @media print {
+    .section { padding: 0.75rem 0; }
+    .section-header { break-after: avoid; }
+    .formation-grid {
+      background: none;
+      border: none;
+    }
+    .formation-card {
+      border: 1px solid #ccc;
+    }
+  }
+</style>

@@ -1,0 +1,356 @@
+---
+interface Props { number: string }
+const { number } = Astro.props
+
+const experiences = [
+  {
+    order: 6,
+    date: "Jan. 2025 → Sept. 2025",
+    company: "IAD France",
+    contract: "Indépendant",
+    title: "Mandataire indépendant de l'immobilier",
+    location: "Lille Métropole (59)",
+    bullets: [
+      "Parenthèse entrepreneuriale assumée, interrompue après évaluation de l'adéquation avec mon profil",
+      "Compétences mobilisées : <strong>relation client</strong>, <strong>négociation</strong>, rédaction contractuelle",
+    ],
+    tags: ["Indépendant", "Relation client", "Négociation"],
+    featured: false,
+  },
+  {
+    order: 5,
+    date: "2022 → 2024",
+    company: "ADEO Services",
+    contract: "CDI",
+    title: "Responsable Technique Laboratoire",
+    location: "Ronchin (59)",
+    bullets: [
+      "Création de <strong>l'activité du laboratoire</strong> depuis zéro : <strong>méthodes de test</strong>, <strong>gestion documentaire</strong> (rapports d'essais, fiches méthodes, procédures), <strong>métrologie</strong> du parc d'équipements",
+      "Conception et <strong>fabrication d'outils de test sur-mesure</strong> (préhenseurs, systèmes à engrenages) via <strong>SolidWorks</strong>, <strong>impression 3D</strong> et <strong>découpe laser</strong> — appris en autodidacte",
+      "Assurance de la <strong>continuité opérationnelle</strong> du laboratoire pendant 4 mois lors d'une transition managériale",
+      "<strong>Formation et accompagnement</strong> des équipes projets",
+      "Production de contenus de <strong>vulgarisation scientifique</strong> en interne",
+    ],
+    tags: ["Création de méthodes", "Métrologie", "Gestion documentaire", "SolidWorks", "Impression 3D", "Formation"],
+    featured: true,
+  },
+  {
+    order: 4,
+    date: "2020 → 2022",
+    company: "Motherson · Harnes",
+    contract: "CDI",
+    title: "Technicien Essais Validation",
+    location: "Harnes (62)",
+    bullets: [
+      "Programmation de <strong>robots Kuka KR140</strong> : définition des trajectoires et paramétrage des conditions d'essai",
+      "Pilotage d'<strong>enceintes climatiques</strong> couplées aux robots pour essais d'<strong>endurance</strong>",
+      "<strong>Essais mécaniques destructifs</strong> sur éprouvettes et <strong>instrumentation</strong>",
+    ],
+    tags: ["Essais destructifs", "Endurance", "Robot Kuka", "Instrumentation", "Automobile"],
+    featured: false,
+  },
+  {
+    order: 3,
+    date: "2019 → 2020",
+    company: "Dassault Aviation · Seclin",
+    contract: "CDI",
+    title: "Contrôleur Dimensionnel",
+    location: "Seclin (59)",
+    bullets: [
+      "<strong>Contrôle dimensionnel</strong> de pièces <strong>Rafale</strong> et <strong>Falcon 6X</strong>",
+      "<strong>Essais destructifs</strong> à la machine de traction sur éprouvettes métalliques pour qualification des fours",
+      "Suivi <strong>métrologique</strong> des outils de contrôle dimensionnel",
+    ],
+    tags: ["Défense / Aéronautique", "Contrôle dimensionnel", "Métrologie"],
+    featured: true,
+  },
+  {
+    order: 2,
+    date: "Oct. 2015 → Mai 2017",
+    company: "DGA — Techniques Terrestres · Bourges",
+    contract: "Contractuel Défense",
+    title: "ICT Spécialiste Technique Méthodes et Moyens d'Essai",
+    location: "Bourges (18)",
+    bullets: [
+      "Mise en place de <strong>caméras ultra-rapides FASTCAM</strong> pour capture d'événements à haute vélocité",
+      "<strong>Radiographie éclair</strong> pour observation de jets de charge creuse à travers blindages",
+      "Création d'une <strong>charte colorimétrique</strong> intégrant les couleurs des membres de l'<strong>OTAN</strong> pour calibrer les chaînes de mesure photo/vidéo",
+      "Photoreportage sur positions de tirs",
+    ],
+    tags: ["Défense", "Création de méthode", "FASTCAM", "Radiographie", "Colorimétrie"],
+    featured: true,
+  },
+  {
+    order: 1,
+    date: "Mai 2017 → Mai 2018",
+    company: "APAVE · Marcq-en-Barœul",
+    contract: "CDI",
+    title: "Relais Matériel Agence",
+    location: "Marcq-en-Barœul (59)",
+    bullets: [
+      "Gestion <strong>métrologique</strong> d'un parc de <strong>1 600 instruments de mesure</strong> : suivi des validités et organisation des <strong>étalonnages</strong>",
+    ],
+    tags: ["Parc instruments", "Métrologie légale", "Gestion documentaire"],
+    featured: false,
+  },
+];
+
+const featured = experiences
+  .filter(e => e.featured)
+  .sort((a, b) => a.order - b.order);
+
+const others = experiences
+  .filter(e => !e.featured)
+  .sort((a, b) => a.order - b.order);
+---
+
+<section class="section">
+  <div class="page">
+    <div class="section-header">
+      <span class="section-num">{number}</span>
+      <h2>Expériences</h2>
+    </div>
+    <div class="exp-list">
+      {experiences
+        .sort((a, b) => b.order - a.order) // tri du plus récent au plus ancien
+        .map((exp) => (
+          <div class={`exp-item ${exp.featured ? "featured" : ""}`}>
+            <div class="exp-date">{exp.date}</div>
+
+            <div>
+              <div class="exp-company">
+                {exp.company}
+                {exp.contract === "Apprentissage" && (
+                  <span class="contract-badge">Apprentissage</span>
+                )}
+                {exp.contract === "Contractuel Défense" && (
+                  <span class="contract-badge">Contractuel Défense</span>
+                )}
+              </div>
+
+              <div class="exp-title">{exp.title}</div>
+              <div class="exp-location">{exp.location}</div>
+
+              <ul class="exp-bullets">
+                {exp.bullets.map((bullet) => (
+                  <li set:html={bullet} />
+                ))}
+              </ul>
+
+              <div class="exp-tags">
+                {exp.tags.map((tag) => (
+                  <span class={`tag ${exp.featured ? "accent" : ""}`}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+    </div>
+
+
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #e8d4a8;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .exp-item.featured {
+    background: transparent;
+    padding: 2rem 0;
+    margin: 0;
+    /* padding-left: 1.5rem; */
+  }
+
+  .exp-item > div:last-child {
+    border-left: 2px solid transparent;
+    padding-left: 1rem;
+  }
+
+  .exp-item.featured > div:last-child {
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.6;
+    padding-top: 0.2rem;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .contract-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    padding: 0.1rem 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  .exp-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .exp-location {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .exp-bullets li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--muted);
+    font-weight: 300;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .exp-bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .exp-bullets li strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .tag.accent {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .others-header {
+    padding: 2rem 0 1rem;
+  }
+
+  .others-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .others-label::before {
+    content: '';
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  .exp-list.others .exp-item:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .exp-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .exp-item.featured {
+      margin: 0;
+      padding: 1.5rem 1rem;
+    }
+
+    .exp-date {
+      color: var(--accent);
+    }
+  }
+
+  @media print {
+    .section { padding: 0.75rem 0; }
+    .section-header { break-after: avoid; }
+  }
+</style>

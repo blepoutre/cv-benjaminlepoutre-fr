@@ -1,0 +1,21 @@
+---
+// src/components/PrintContactScript.astro
+// Injecte l'e-mail de contact dans le DOM uniquement au moment de l'impression,
+// pour ne jamais l'exposer en clair dans le HTML statique servi au navigateur.
+---
+<script>
+  const EMAIL = 'contact@benjaminlepoutre.fr';
+
+  function fillPrintContacts() {
+    document.querySelectorAll('[data-print-contact]').forEach((el) => {
+      el.textContent = EMAIL;
+    });
+  }
+  function clearPrintContacts() {
+    document.querySelectorAll('[data-print-contact]').forEach((el) => {
+      el.textContent = '';
+    });
+  }
+  window.addEventListener('beforeprint', fillPrintContacts);
+  window.addEventListener('afterprint', clearPrintContacts);
+</script>

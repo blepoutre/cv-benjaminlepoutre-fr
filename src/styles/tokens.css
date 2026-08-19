@@ -1,0 +1,31 @@
+/* ================================
+   DESIGN TOKENS — à customiser ici
+   ================================ */
+
+/* COULEURS */
+/* Or & Bleu — hybride */
+:root {
+  --ink: #0f0f0f;
+  --paper: #ffffff;
+  --accent: #b8922e;
+  --accent2: #1a6fa8;
+  --muted: #4a4a4a;
+  --rule: #e5e2dc;
+  --ghost: #f4f4f4;
+  --card: #f2f0ec;
+}
+
+/* TYPOGRAPHIE */
+/* Inter + Playfair */
+/* :root {
+  --serif: "Playfair Display", serif;
+  --sans: "Inter", sans-serif;
+  --mono: "JetBrains Mono", monospace;
+} */
+
+/* Libre Baskerville + Source Sans */
+:root {
+  --serif: "Libre Baskerville", serif;
+  --sans: "Source Sans 3", sans-serif;
+  --mono: "Source Code Pro", monospace;
+}

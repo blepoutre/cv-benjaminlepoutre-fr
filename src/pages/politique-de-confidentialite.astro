@@ -1,0 +1,171 @@
+---
+// src/pages/politique-de-confidentialite.astro
+
+import PrintContactScript from '../components/PrintContactScript.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Politique de confidentialité">
+  <div class="page">
+    <a href="/" class="back-link">← Retour à l'accueil</a>
+
+    <h1>Politique de confidentialité</h1>
+    <p class="date">Dernière mise à jour : 19 août 2026</p>
+
+    <h2>1. Responsable du traitement</h2>
+    <p>
+      Le responsable de la collecte et du traitement des données est :<br />
+      <strong>Benjamin Lepoutre</strong><br />
+      Me contacter via :
+      <!-- Version écran : Ouvre la modale pour éviter le spam -->
+      <a class="contact-trigger-link screen-only openModalBtn" role="button" tabindex="0"> le formulaire de contact</a>
+      <!-- Version impression papier / PDF : Affiche l'e-mail brut -->
+      &nbsp;<span class="print-only" data-print-contact></span>
+    </p>
+
+    <h2>2. Données collectées et finalités</h2>
+    <p>
+      Lorsque vous utilisez le formulaire de contact du site, nous collectons les informations suivantes :
+    </p>
+    <ul>
+      <li>Votre prénom et votre nom</li>
+      <li>Votre adresse e-mail</li>
+      <li>Votre numéro de téléphone (facultatif)</li>
+      <li>L'objet de votre message et son contenu</li>
+    </ul>
+    <p>
+      Ces données sont collectées exclusivement dans le but de répondre à vos demandes professionnelles ou de contact. Elles ne sont ni vendues, ni cédées à des tiers.
+    </p>
+
+    <h2>3. Destinataires des données & Prestataire technique</h2>
+    <p>
+      Les messages envoyés via le formulaire de contact transitent par notre prestataire technique <strong>Web3Forms</strong>, service sécurisé de traitement de formulaires, qui transmet directement les messages par e-mail. Web3Forms s'engage à respecter la réglementation en matière de protection des données (RGPD).
+    </p>
+
+    <h2>4. Durée de conservation</h2>
+    <p>
+      Les données transmises via le formulaire de contact sont conservées pour une durée maximale de <strong>12 mois</strong> à compter du dernier échange, puis elles sont supprimées.
+    </p>
+
+    <h2>5. Vos droits (RGPD)</h2>
+    <p>
+      Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi « Informatique et Libertés », vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles.
+    </p>
+    <p>
+      Pour exercer ces droits, vous pouvez me contacter directement via
+      <a class="contact-trigger-link screen-only openModalBtn" role="button" tabindex="0"> le formulaire de contact</a>
+      &nbsp;<span class="print-only" data-print-contact></span>.
+    </p>
+
+    <h2>6. Sécurité</h2>
+    <p>
+      Le site est hébergé par <strong>o2switch</strong> (France) et utilise un protocole sécurisé (HTTPS) garantissant le chiffrement des données lors de leur transmission.
+    </p>
+
+    <PrintContactScript />
+  </div>
+</Layout>
+<style>
+  .page {
+    max-width: 750px !important; /* Plus confortable pour de longs textes */
+    padding: 4rem 1.5rem !important;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .back-link:hover {
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+    letter-spacing: -0.02em;
+  }
+
+  .date {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 3rem;
+  }
+
+  h2 {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.4rem;
+  }
+
+  p, li {
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  p strong, li strong {
+    color: var(--ink);
+  }
+
+  ul {
+    margin-top: 0.5rem;
+    margin-bottom: 1.2rem;
+    padding-left: 1.2rem;
+  }
+
+  li {
+    margin-bottom: 0.3rem;
+  }
+
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  /* Lien cliquable ouvrant la modale anti-spam */
+  .contact-trigger-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--accent);
+    text-decoration: none;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+  .contact-trigger-link:hover {
+    opacity: 0.8;
+  }
+
+  .print-only { display: none !important; }
+  .screen-only { display: inline !important; }
+
+  @media print {
+    .print-only { display: inline !important; }
+    .screen-only { display: none !important; }
+  }
+</style>

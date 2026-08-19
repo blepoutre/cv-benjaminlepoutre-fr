@@ -1,0 +1,745 @@
+---
+// src/pages/cv-court.astro
+
+import { counter } from '../utils/sectionCounter';
+counter.reset();
+
+import Layout from '../layouts/Layout.astro';
+import QRCode from '../components/QRcode.astro';
+
+const experiences = [
+  {
+    date: "2022 → 2024",
+    company: "ADEO Services",
+    contract: "CDI",
+    title: "Responsable Technique Laboratoire",
+    location: "Ronchin (59)",
+    bullets: [
+      "Création de l'activité <strong>laboratoire d’essais</strong> : définition des <strong>méthodes de test</strong>, protocoles et critères d’acceptation",
+      "Mise au point de <strong>bancs de test</strong> et adaptation des méthodes selon les besoins des équipes techniques",
+      "Structuration de la <strong>documentation technique</strong> et des dossiers de validation",
+    ],
+    tags: ["Méthodes", "Prototypage", "Essais"],
+    featured: true,
+  },
+  {
+    date: "2020 → 2022",
+    company: "Motherson · Harnes",
+    contract: "CDI",
+    title: "Technicien Essais Validation",
+    location: "Harnes (62)",
+    bullets: [
+      "Programmation de <strong>robots Kuka KR140</strong> pour essais de durabilité et cycles automatisés",
+      "Réalisation d’<strong>essais destructifs</strong> et <strong>instrumentation</strong> de pièces automobiles",
+    ],
+    tags: ["Robotique", "Essais", "Automobile"],
+    featured: false,
+  },
+  {
+    date: "2019 → 2020",
+    company: "Dassault Aviation · Seclin",
+    contract: "CDI",
+    title: "Contrôleur Dimensionnel",
+    location: "Seclin (59)",
+    bullets: [
+      "<strong>Essais mécaniques destructifs</strong> sur éprouvettes métalliques pour qualification matériaux et procédés",
+      "Contrôle dimensionnel de pièces complexes (Rafale, Falcon 6X) pour <strong>vérification de conformité</strong>",
+    ],
+    tags: ["Essais mécaniques", "Métrologie", "Aéronautique"],
+    featured: true,
+  },
+  {
+    date: "Oct. 2018 → Avr. 2019",
+    company: "Macopharma · Tourcoing",
+    contract: "CDI",
+    title: "Technicien Recherche & Développement",
+    location: "Tourcoing (59)",
+    bullets: [
+      "<strong>Caractérisation mécanique de poches de collecte sanguine</strong> : traction, résistance à la pression, tenue des soudures",
+      "Adaptation des <strong>protocoles d'essai</strong> selon le produit et les moyens de mesure disponibles",
+      "Rédaction des <strong>rapports de résultats</strong> et contribution à la validation des procédés",
+    ],
+    tags: ["Dispositif médical", "Essais mécaniques", "R&D"],
+    featured: true,
+  },
+  {
+    date: "Mai 2017 → Mai 2018",
+    company: "Apave · Nord",
+    contract: "CDI",
+    title: "Technicien Maintenance & Logistique",
+    location: "Nord (59)",
+    bullets: [
+      "Maintenance curative et <strong>gestion logistique du parc d'instruments</strong> vers les organismes d'étalonnage et de contrôle",
+      "Saisie et suivi des données de parc sous <strong>DECA v7</strong> (traçabilité, statuts, retours d'étalonnage)",
+    ],
+    tags: ["Parc instruments", "Étalonnage", "DECA"],
+    featured: false,
+  },
+  {
+    date: "Oct. 2015 → Mai 2017",
+    company: "DGA — Techniques Terrestres",
+    contract: "Contractuel Défense",
+    title: "ICT Spécialiste Technique Méthodes et Moyens d'Essai",
+    location: "Bourges (18)",
+    bullets: [
+      "Déploiement de <strong>caméras ultra-rapides FASTCAM</strong> pour analyse d’événements à haute vélocité",
+      "Création d’une <strong>méthode de calibration colorimétrique</strong> (charte OTAN) pour chaînes de mesure photo/vidéo",
+      "Contribution à la <strong>mise au point de protocoles d’essai</strong> en environnement défense",
+    ],
+    tags: ["Méthodes", "Instrumentation", "R&D Défense"],
+    featured: true,
+  },
+];
+---
+
+<Layout
+  title="Benjamin Lepoutre — CV Synthèse"
+  description="CV synthèse — Technicien Supérieur Métrologie & Qualité. Parcours terrain défense, aéronautique, industrie. Disponible."
+>
+
+  <div class="back-bar">
+    <div class="page">
+      <a href="/" class="back-link">← Version complète</a>
+      <button class="print-btn" onclick="window.print()">↓ Télécharger PDF</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header-court">
+    <div class="page">
+      <div class="label">Curriculum Vitæ · Synthèse</div>
+      <div class="header-grid">
+        <div>
+          <h1>
+            <span class="line1">Technicien Supérieur</span>
+            <span class="line2">Métrologie <span>&</span> Qualité</span>
+          </h1>
+          <h2>Créer, fiabiliser et transmettre.</h2>
+          <p class="tagline">
+            Fort d'un parcours terrain en environnements exigeants — <strong>défense, aéronautique, industrie, pharmaceutique</strong> —
+            je <strong>crée, adapte et fiabilise des méthodes de mesure</strong> là où elles sont critiques,
+            je les documente rigoureusement et en assure la <strong>transmission</strong> aux équipes.<br />
+            Convaincu que <strong>la bonne information au bon moment</strong> est elle-même un outil de mesure,
+            je structure les connaissances pour qu'elles restent utilisables en <strong>audit</strong> comme sur le terrain.
+          </p>
+        </div>
+        <div class="header-meta">
+          <!-- Groupe texte des coordonnées -->
+          <div class="header-meta-text">
+            <div class="meta-item">📍 Emmerin, France</div>
+            <div class="meta-item">
+              <a class="contact-link" href="tel:0603166412">06 03 16 64 12</a>
+            </div>
+            <div class="meta-item screen-only">
+              <a class="email-trigger-btn openModalBtn">Me contacter</a>
+            </div>
+            <span class="meta-item print-only" data-print-contact></span>
+            <div class="meta-item">
+              <a href="https://linkedin.com/in/benjaminlepoutre" target="_blank">linkedin.com/in/benjaminlepoutre</a>
+            </div>
+            <div class="dispo">Disponible</div>
+          </div>
+
+          <!-- Le QR Code -->
+          <div class="qr-wrapper">
+            <QRCode url="https://benjaminlepoutre.fr" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- COMPÉTENCES -->
+  <section class="section">
+    <div class="page">
+      <div class="section-header">
+        <span class="section-num">{counter.next()}</span>
+        <h2>Compétences</h2>
+      </div>
+      <div class="competences-grid primary">
+        <div class="competence-item">
+          <div class="competence-cat">Métrologie</div>
+          <div class="competence-name">Budget d'incertitude · GUM (JCGM 100:2008) · ISO 17025 · ISO 9001 · Étalonnage · Traçabilité</div>
+        </div>
+        <div class="competence-item">
+          <div class="competence-cat">Essais & Tests</div>
+          <div class="competence-name">Création de méthodes · Essais destructifs & non-destructifs · Colorimétrie · Conduite de robot · Impression 3D</div>
+        </div>
+        <div class="competence-item">
+          <div class="competence-cat">Qualité</div>
+          <div class="competence-name">Gestion documentaire · Rédaction de procédures · AMDEC · Contrôle dimensionnel · Audit</div>
+        </div>
+      </div>
+      <div class="competences-grid secondary">
+        <div class="competence-item">
+          <div class="competence-cat">Transversal</div>
+          <div class="competence-name">Autonomie d'apprentissage · Transmission & vulgarisation · Formation d'équipes</div>
+        </div>
+        <div class="competence-item">
+          <div class="competence-cat">Langues</div>
+          <div class="competence-name">Français (natif) · Anglais technique — lecture de normes ISO et documentation</div>
+        </div>
+        <div class="competence-item">
+          <div class="competence-cat">Tech & Culture IT</div>
+          <div class="competence-name">Développement web · Outils numériques sur-mesure · SolidWorks</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPÉRIENCES -->
+  <section class="section">
+    <div class="page">
+      <div class="section-header">
+        <span class="section-num">{counter.next()}</span>
+        <h2>Expériences</h2>
+      </div>
+      <div class="exp-grid">
+        {experiences.map((exp) => (
+          <div class={`exp-item ${exp.featured ? "featured" : ""}`}>
+            <div class="exp-date">{exp.date}</div>
+            <div class="exp-company">
+              {exp.company}
+              {exp.contract === "Contractuel Défense" && (
+                <span class="contract-badge">Contractuel Défense</span>
+              )}
+            </div>
+            <div class="exp-title">{exp.title}</div>
+            <ul class="exp-bullets">
+              {exp.bullets.map((bullet) => (
+                <li set:html={bullet} />
+              ))}
+            </ul>
+            <div class="exp-tags">
+              {exp.tags.map((tag) => (
+                <span class={`tag ${exp.featured ? "accent" : ""}`}>{tag}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PRATIQUE SPORTIVE -->
+  <section class="section">
+    <div class="page">
+      <div class="section-header">
+        <span class="section-num">{counter.next()}</span>
+        <h2>Pratique sportive</h2>
+      </div>
+
+      <div class="sports-inline">
+        Golf (HCP 13,4) · Basketball · Natation · Trajet domicile - travail à vélo · Bénévole Route du Louvre depuis 2 ans.
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FORMATION -->
+  <section class="section">
+    <div class="page">
+      <div class="section-header">
+        <span class="section-num">{counter.next()}</span>
+        <h2>Formation</h2>
+      </div>
+      <div class="formation-grid">
+        <div class="formation-card">
+          <div class="formation-year">2013 — 2014</div>
+          <div class="formation-title">DUT Mesures Physiques</div>
+          <div class="formation-org">IUT de Bourges · Apprentissage chez Hutchinson</div>
+        </div>
+        <div class="formation-card accent">
+          <div class="formation-year">Avr. — Juin 2024</div>
+          <div class="formation-title">Titre Pro RNCP6 — Concepteur / Développeur Web</div>
+          <div class="formation-org">Le Wagon · Lille</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-court">
+    <div class="page">
+      <div class="footer-bottom">
+        <a href="/" class="back-link">← Version complète</a>
+        <span class="footer-sig">±0</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="print-only print-legal-notice">
+    <p>
+      © 2026 Benjamin Lepoutre. Les informations contenues dans ce document constituent des œuvres de l'esprit protégées par le Code de la propriété intellectuelle.
+      Toute reproduction, extraction, réutilisation ou exploitation (notamment à des fins de démarchage commercial) sans autorisation écrite est strictement prohibée.
+    </p>
+  </div>
+</Layout>
+
+<style>
+  .back-bar {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .back-bar .page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .print-btn {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: none;
+    padding: 0.3rem 0.75rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .print-btn:hover { background: var(--accent); }
+
+  .back-link {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* HEADER WEB */
+  .header-court {
+    padding: 2.5rem 0 1.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .label::before, .label::after {
+    content: '';
+    height: 1px;
+    background: var(--accent);
+    flex: 1;
+  }
+  .label::before { max-width: 1.5rem; }
+
+  .header-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  h1 .line1, h1 .line2 { display: block; }
+  h1 .line2 span { color: var(--accent); }
+
+  h2 {
+    font-family: var(--sans);
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 550px;
+  }
+  .tagline strong { color: var(--ink); font-weight: 500; }
+
+  .header-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-end;
+  }
+
+  .header-meta-text {
+    min-width: 0 !important;
+  }
+
+  .meta-item {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .meta-item a { color: var(--muted); text-decoration: none; }
+  .meta-item a:hover { color: var(--accent); }
+
+  .email-trigger-btn {
+    background: none;
+    border: none;
+    font: inherit;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+  .email-trigger-btn:hover { color: var(--accent); }
+
+  .print-only { display: none !important; }
+  .screen-only { display: block !important; }
+
+  .dispo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+  .dispo::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+  }
+
+  /* SECTIONS COMMUNES */
+  .section {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .section-header h2 {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* COMPÉTENCES */
+  .competences-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 1px;
+  }
+  .competence-item {
+    background: var(--paper);
+    padding: 0.5rem 0.75rem;
+  }
+  .competences-grid.secondary .competence-item {
+    background: var(--card);
+  }
+  .competence-cat {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.2rem;
+  }
+  .competences-grid.secondary .competence-cat { color: var(--muted); }
+  .competence-name {
+    font-size: 0.8rem;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* EXPÉRIENCES */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .exp-item {
+    background: var(--card);
+    padding: 0.75rem;
+    border: 1px solid var(--rule);
+  }
+  .exp-item.featured {
+    border-left: 2px solid var(--accent);
+  }
+  .exp-date, .exp-company {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+  .contract-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    border: 1px solid var(--accent2);
+    color: var(--accent2);
+    padding: 0.05rem 0.3rem;
+    margin-left: 0.3rem;
+  }
+  .exp-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0.2rem 0;
+  }
+  .exp-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0.4rem 0;
+  }
+  .exp-bullets li {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--muted);
+    padding-left: 0.8rem;
+    position: relative;
+    margin-bottom: 0.2rem;
+  }
+  .exp-bullets li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .exp-bullets li strong { color: var(--ink); }
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.55rem;
+    padding: 0.1rem 0.35rem;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .tag.accent { border-color: var(--accent); color: var(--accent); }
+
+  /* SPORT & FORMATION */
+  .sports-inline {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .formation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .formation-card {
+    background: var(--card);
+    padding: 0.75rem;
+    border: 1px solid var(--rule);
+  }
+  .formation-year {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .formation-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0.15rem 0;
+  }
+  .formation-org {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+  }
+
+  .qr-wrapper { display: none; }
+  .footer-court { display: none; }
+
+            /* ==========================================
+     MODE IMPRESSION NATIVE (window.print)
+     ========================================== */
+  @media print {
+    @page {
+      size: A4;
+      margin: 0.5cm;
+    }
+
+    body {
+      background: white !important;
+      color: black !important;
+      font-size: 8pt !important;
+      -webkit-print-color-adjust: exact;
+    }
+
+    .back-bar, .print-btn, .dispo, .footer-court {
+      display: none !important;
+    }
+
+    .print-only {
+      display: block !important;
+      font-family: var(--mono) !important;
+      font-size: 0.6rem !important;
+      color: black !important;
+    }
+
+    .screen-only {
+      display: none !important;
+    }
+
+    /* Conserver l'espace de la ligne du haut sans l'afficher */
+    .label {
+      visibility: hidden !important;
+      margin-bottom: 0.3rem !important;
+    }
+
+    .header-court {
+      padding: 0 0 0.2rem 0 !important;
+      border-bottom: none !important;
+      margin-bottom: 0 !important;
+    }
+
+    /* Forcer la grille globale du header : 1 colonne texte, 1 colonne QR/Infos */
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem !important;
+      align-items: start !important;
+    }
+
+    /* Empêche la colonne gauche de résister à la compression */
+    .header-grid > div:first-child {
+      min-width: 0;
+    }
+
+    h1 { font-size: 1.3rem !important; }
+    h2 { font-size: 0.8rem !important; margin-bottom: 0.2rem !important; }
+
+    .tagline {
+      font-size: 0.7rem !important;
+      line-height: 1.25 !important;
+      max-width: 420px !important;
+    }
+
+    /* Le conteneur droite (QR code + texte métas) */
+    .header-meta {
+      display: grid !important;
+      grid-template-columns: auto 1px auto !important; /* Texte | Ligne séparatrice | QR Code */
+      align-items: center !important;
+      gap: 14px !important;
+      min-width: 0 !important;
+    }
+
+    /* Forcer la taille et l'affichage propre du QR code ici */
+    .qr-wrapper {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 80px !important;
+      height: 80px !important;
+      min-width: 0 !important;
+      padding: 5px !important;
+      border: 1px solid var(--accent) !important;
+      border-radius: 8px;
+      box-sizing: content-box !important;
+    }
+
+    .meta-item {
+      font-size: 0.6rem !important;
+      white-space: nowrap !important;
+    }
+
+    /* Supprimer les lignes de séparation entre les sections */
+    .section {
+      padding: 0.35rem 0 !important;
+      border-bottom: none !important;
+    }
+
+    .section-header {
+      margin-bottom: 0.2rem !important;
+    }
+    .section-header h2 { font-size: 0.85rem !important; }
+
+    .competences-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .competence-item {
+      padding: 0.2rem 0.4rem !important;
+    }
+    .competence-name { font-size: 0.65rem !important; }
+
+    .exp-grid {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.3rem !important;
+    }
+    .exp-item {
+      padding: 0.3rem !important;
+    }
+    .exp-bullets li {
+      font-size: 0.65rem !important;
+      line-height: 1.2 !important;
+      margin-bottom: 0.05rem !important;
+    }
+    .exp-tags { display: none !important; }
+
+    .formation-grid {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.3rem !important;
+    }
+    .formation-card {
+      padding: 0.3rem !important;
+    }
+    .sports-inline {
+      font-size: 0.7rem !important;
+    }
+
+    .print-legal-notice {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 0.5rem !important; /* Très petit */
+      color: var(--muted) !important;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+    }
+  }
+</style>

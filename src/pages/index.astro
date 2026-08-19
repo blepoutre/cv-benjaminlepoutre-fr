@@ -1,0 +1,30 @@
+---
+// src/pages/index.astro
+
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
+import { SECTIONS, type SectionId } from '../data/cvConfig';
+
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import SectionCompetences from '../components/SectionCompetences.astro';
+import SectionExperiences from '../components/SectionExperiences.astro';
+import SectionFormations from '../components/SectionFormations.astro';
+import SectionPratiqueSportive from '../components/SectionPratiqueSportives.astro';
+// import SectionProfil from '../components/SectionProfil.astro';
+import Layout from '../layouts/Layout.astro';
+
+const components: Record<SectionId, AstroComponentFactory> = {
+  SectionCompetences, SectionPratiqueSportive, SectionExperiences, SectionFormations
+};
+---
+
+<Layout>
+  <Header />
+  {SECTIONS.map((section, index) => {
+    const Component = components[section.file];
+    if (!Component) return null;
+    const num = String(index + 1).padStart(2, '0');
+    return <Component number={num} />;
+  })}
+  <Footer />
+</Layout>

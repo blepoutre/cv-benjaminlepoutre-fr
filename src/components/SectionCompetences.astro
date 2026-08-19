@@ -1,0 +1,201 @@
+---
+interface Props { number: string }
+const { number } = Astro.props
+
+const primary = [
+  { cat: "Métrologie", name: "Budget d'incertitude · GUM (JCGM 100:2008) · ISO 17025 · ISO 9001 · Étalonnage · Traçabilité", items: ["Budget d'incertitude", "GUM (JCGM 100:2008)", "ISO 17025", "ISO 9001", "Étalonnage", "Traçabilité"] },
+  { cat: "Essais & Test", name: "Création de méthodes · Essais destructifs & non-destructifs · Colorimétrie · Conduite de robot · Impression 3D", items: ["Création de méthodes", "Essais destructifs & non-destructifs", "Colorimétrie", "Conduite de robot", "Impression 3D"] },
+  { cat: "Qualité", name: "Gestion documentaire · Rédaction de procédures · AMDEC · Contrôle dimensionnel · Audit", items: ["Gestion documentaire", "Rédaction de procédures", "AMDEC", "Contrôle dimensionnel", "Audit"] },
+];
+
+const secondary = [
+  { cat: "Transversal", name: "Autonomie d'apprentissage · Transmission et vulgarisation · Formation d'équipes · Engagement dans les instances collectives", items: ["Autonomie d'apprentissage", "Transmission & vulgarisation", "Formation d'équipes", "Engagement dans les instances collectives"] },
+  { cat: "Langues", name: "Français (natif) · Anglais technique, lecture de normes ISO et documentation", items: ["Français (natif)", "Anglais technique — lecture de normes ISO et documentation"] },
+  { cat: "Tech & Culture IT", name: "Développement web · Outils numériques sur-mesure · Astro · SolidWorks", items: ["Développement web", "Outils numériques sur-mesure", "Astro", "SolidWorks"] },
+];
+---
+
+<section class="section">
+  <div class="page">
+    <div class="section-header">
+      <span class="section-num">{number}</span>
+      <h2>Compétences</h2>
+    </div>
+
+    <div class="competences-grid primary">
+      {primary.map((c) => (
+        <div class="competence-item">
+          <div class="competence-cat">{c.cat}</div>
+          <div class="competence-name">{c.name}</div>
+          <ul class="competence-bullets">
+            {c.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="competences-grid secondary">
+      {secondary.map((c) => (
+        <div class="competence-item">
+          <div class="competence-cat">{c.cat}</div>
+          <div class="competence-name">{c.name}</div>
+          <ul class="competence-bullets">
+            {c.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #e8d4a8;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: 1.8rem;
+    letter-spacing: -0.01em;
+  }
+
+  .competences-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .competences-grid.secondary {
+    margin-top: 1px;
+    border-top: none;
+  }
+
+  .competence-item {
+    background: var(--paper);
+    padding: 1rem 1.25rem;
+    transition: background 0.2s;
+  }
+
+  @media (hover: hover) {
+    .competence-item:hover { background: var(--card); }
+    .competences-grid.secondary .competence-item:hover { background: var(--paper); }
+  }
+
+  .competences-grid.secondary .competence-item {
+    background: var(--card);
+  }
+
+  .competence-cat {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .competences-grid.secondary .competence-cat {
+    color: var(--muted);
+  }
+
+  .competence-name {
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .competences-grid.secondary .competence-name {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* Bullets masquées par défaut — desktop uniquement */
+  .competence-bullets {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .competences-grid {
+      grid-template-columns: 1fr;
+      background: none;
+      border: none;
+      gap: 0;
+    }
+
+    .competences-grid.secondary {
+      margin-top: 0;
+      border-top: none;
+    }
+
+    .competence-item {
+      background: transparent;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .competences-grid.secondary .competence-item {
+      background: transparent;
+    }
+
+    /* Sur mobile : cacher le texte en ligne, afficher les bullets */
+    .competence-name {
+      display: none;
+    }
+
+    .competence-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .competence-bullets li {
+      font-size: 0.85rem;
+      color: var(--ink);
+      line-height: 1.5;
+      padding-left: 0.75rem;
+      position: relative;
+    }
+
+    .competences-grid.secondary .competence-bullets li {
+      color: var(--muted);
+    }
+
+    .competence-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+  }
+
+  @media print {
+    .section { padding: 0.75rem 0; }
+    .section-header { break-after: avoid; }
+    .competence-bullets { display: none !important; }
+    .competence-name { display: block !important; }
+  }
+</style>
